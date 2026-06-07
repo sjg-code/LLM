@@ -1,0 +1,141 @@
+<!--pages/detail/detail.wxml - 厕所详情页-->
+<view class="detail-page">
+
+  <!-- ===== 顶部地图 ===== -->
+  <view class="detail-hero">
+    <map
+      id="detailMap"
+      class="detail-map"
+      latitude="{{toilet.latitude}}"
+      longitude="{{toilet.longitude}}"
+      scale="17"
+      markers="{{markers}}"
+      show-location
+      enable-zoom
+      enable-scroll
+    ></map>
+    <view class="hero-gradient"></view>
+  </view>
+
+  <!-- ===== 主信息卡片 ===== -->
+  <view class="main-card">
+    <!-- 标题区 -->
+    <view class="main-header">
+      <view class="main-title-wrap">
+        <text class="main-name">{{toilet.name}}</text>
+        <view class="main-type-tag">
+          <text>公厕</text>
+        </view>
+      </view>
+      <view class="main-distance">
+        <text class="dist-number">{{toilet.distanceText}}</text>
+        <text class="dist-direction">{{toilet.direction}}方向</text>
+      </view>
+    </view>
+
+    <!-- 评分 -->
+    <view class="rating-section" wx:if="{{toilet.rating}}">
+      <view class="rating-stars">
+        <view class="star" wx:for="{{5}}" wx:key="*this">
+          <text class="star-icon {{index < Math.floor(toilet.rating) ? 'filled' : ''}}">★</text>
+        </view>
+      </view>
+      <text class="rating-score">{{toilet.rating}} 分</text>
+    </view>
+
+    <!-- 信息列表 -->
+    <view class="info-list">
+      <view class="info-item">
+        <view class="info-icon-wrap green">
+          <text class="info-emoji">📍</text>
+        </view>
+        <view class="info-detail">
+          <text class="info-label">地址</text>
+          <text class="info-value">{{toilet.address}}</text>
+        </view>
+      </view>
+
+      <view class="info-item">
+        <view class="info-icon-wrap blue">
+          <text class="info-emoji">🕐</text>
+        </view>
+        <view class="info-detail">
+          <text class="info-label">开放时间</text>
+          <text class="info-value">{{toilet.openTime || '暂无信息'}}</text>
+        </view>
+      </view>
+
+      <view class="info-item">
+        <view class="info-icon-wrap orange">
+          <text class="info-emoji">💰</text>
+        </view>
+        <view class="info-detail">
+          <text class="info-label">费用</text>
+          <text class="info-value">免费</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 设施卡片 ===== -->
+  <view class="facility-card">
+    <text class="section-title">设施信息</text>
+    <view class="facility-grid">
+      <view class="facility-box {{toilet.hasAccessible ? 'active' : 'inactive'}}">
+        <view class="fac-circle {{toilet.hasAccessible ? 'green' : 'gray'}}">
+          <text class="fac-emoji">♿</text>
+        </view>
+        <text class="fac-name">无障碍</text>
+        <view class="fac-badge {{toilet.hasAccessible ? 'yes' : 'no'}}">
+          <text>{{toilet.hasAccessible ? '有' : '无'}}</text>
+        </view>
+      </view>
+
+      <view class="facility-box {{toilet.hasPaper ? 'active' : 'inactive'}}">
+        <view class="fac-circle {{toilet.hasPaper ? 'green' : 'gray'}}">
+          <text class="fac-emoji">🧻</text>
+        </view>
+        <text class="fac-name">纸巾</text>
+        <view class="fac-badge {{toilet.hasPaper ? 'yes' : 'no'}}">
+          <text>{{toilet.hasPaper ? '有' : '无'}}</text>
+        </view>
+      </view>
+
+      <view class="facility-box {{toilet.hasSoap ? 'active' : 'inactive'}}">
+        <view class="fac-circle {{toilet.hasSoap ? 'green' : 'gray'}}">
+          <text class="fac-emoji">🧴</text>
+        </view>
+        <text class="fac-name">洗手液</text>
+        <view class="fac-badge {{toilet.hasSoap ? 'yes' : 'no'}}">
+          <text>{{toilet.hasSoap ? '有' : '无'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 标签卡片 ===== -->
+  <view class="tags-card" wx:if="{{toilet.tags && toilet.tags.length}}">
+    <text class="section-title">标签</text>
+    <view class="tags-flow">
+      <view class="tag-pill" wx:for="{{toilet.tags}}" wx:key="*this">
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 底部按钮区 ===== -->
+  <view class="action-section safe-bottom">
+    <button class="btn-nav" bindtap="navigateTo">
+      <text class="btn-nav-icon">🧭</text>
+      <text>导航前往</text>
+    </button>
+    <button class="btn-share" open-type="share">
+      <text class="btn-share-icon">🔗</text>
+      <text>分享</text>
+    </button>
+  </view>
+
+  <!-- 底部占位 -->
+  <view style="height: 200rpx;"></view>
+
+</view>

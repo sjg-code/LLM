@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "拉了么",
+  "navigationBarBackgroundColor": "#07C160",
+  "navigationBarTextStyle": "white",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

@@ -1,0 +1,103 @@
+<!--pages/profile/profile.wxml - 个人中心-->
+<view class="profile-page">
+
+  <!-- ===== 顶部背景 + 用户信息 ===== -->
+  <view class="profile-hero">
+    <view class="hero-bg"></view>
+    <view class="hero-content">
+      <view class="avatar-wrap">
+        <image
+          class="avatar"
+          src="{{userAvatar || '/images/default-avatar.png'}}"
+          mode="aspectFill"
+          bindtap="changeAvatar"
+        ></image>
+        <view class="avatar-ring"></view>
+        <view class="avatar-badge">
+          <text class="badge-text">V1</text>
+        </view>
+      </view>
+      <view class="user-info">
+        <text class="user-name">找厕所达人</text>
+        <text class="user-id">ID: LM10086</text>
+      </view>
+      <view class="edit-btn" bindtap="editProfile">
+        <text>编辑资料</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 数据统计 ===== -->
+  <view class="stats-card">
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalVisits}}</text>
+      <text class="stat-label">查找次数</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalNav}}</text>
+      <text class="stat-label">导航次数</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalShare}}</text>
+      <text class="stat-label">分享次数</text>
+    </view>
+  </view>
+
+  <!-- ===== 快捷功能 ===== -->
+  <view class="quick-card">
+    <text class="card-title">快捷功能</text>
+    <view class="quick-grid">
+      <view class="quick-item" wx:for="{{quickMenus}}" wx:key="key" bindtap="onQuickTap" data-key="{{item.key}}">
+        <view class="quick-icon-wrap {{item.color}}">
+          <text class="quick-emoji">{{item.icon}}</text>
+        </view>
+        <text class="quick-text">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 成就徽章 ===== -->
+  <view class="achievement-card">
+    <view class="card-title-row">
+      <text class="card-title">我的成就</text>
+      <text class="card-more" bindtap="viewAchievements">查看全部 ›</text>
+    </view>
+    <view class="achievement-list">
+      <view class="achievement-item" wx:for="{{achievements}}" wx:key="id">
+        <view class="achieve-icon-wrap">
+          <text class="achieve-emoji">{{item.icon}}</text>
+        </view>
+        <view class="achieve-info">
+          <text class="achieve-name">{{item.name}}</text>
+          <text class="achieve-desc">{{item.desc}}</text>
+        </view>
+        <view class="achieve-status {{item.unlocked ? 'unlocked' : 'locked'}}">
+          <text>{{item.unlocked ? '已解锁' : '未解锁'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 设置列表 ===== -->
+  <view class="settings-card">
+    <view class="setting-item" wx:for="{{settings}}" wx:key="key" bindtap="onSettingTap" data-key="{{item.key}}">
+      <view class="setting-left">
+        <text class="setting-emoji">{{item.icon}}</text>
+        <text class="setting-text">{{item.label}}</text>
+      </view>
+      <view class="setting-right">
+        <text class="setting-value" wx:if="{{item.value}}">{{item.value}}</text>
+        <text class="setting-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">拉了么 v1.0.0</text>
+  </view>
+
+  <view style="height: 40rpx;"></view>
+</view>

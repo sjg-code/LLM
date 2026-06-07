@@ -1,0 +1,174 @@
+<!--pages/index/index.wxml - 找厕所首页-->
+<view class="page">
+
+  <!-- ===== 顶部地图 Hero 区 ===== -->
+  <view class="hero-section">
+    <map
+      id="myMap"
+      class="hero-map"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      scale="{{scale}}"
+      markers="{{markers}}"
+      show-location
+      enable-zoom
+      enable-scroll
+      bindmarkertap="onMarkerTap"
+    ></map>
+
+    <!-- 地图顶部浮层：标题 + 定位 -->
+    <view class="hero-overlay">
+      <view class="hero-title-row">
+        <view class="hero-title">
+          <text class="title-main">拉了么</text>
+          <text class="title-sub">附近公厕 · 一键即达</text>
+        </view>
+        <view class="relocate-btn" bindtap="relocate">
+          <text class="relocate-icon">📍</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部统计条 -->
+    <view class="hero-stats-bar">
+      <view class="stats-left">
+        <view class="stats-dot"></view>
+        <text class="stats-text" wx:if="{{loading}}">搜索中...</text>
+        <text class="stats-text" wx:else>找到 <text class="stats-num">{{filteredList.length}}</text> 个附近厕所</text>
+      </view>
+      <view class="stats-right" bindtap="toggleMapExpand">
+        <text class="stats-map-text">{{mapExpanded ? '收起地图' : '展开地图'}}</text>
+        <view class="stats-arrow {{mapExpanded ? 'arrow-up' : 'arrow-down'}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 分类筛选标签 ===== -->
+  <scroll-view class="filter-bar" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="filter-inner">
+      <view
+        class="filter-item {{activeFilter === item.key ? 'active' : ''}}"
+        wx:for="{{filters}}"
+        wx:key="key"
+        bindtap="onFilterTap"
+        data-key="{{item.key}}"
+      >
+        <text class="filter-icon">{{item.icon}}</text>
+        <text class="filter-text">{{item.label}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- ===== 厕所卡片列表 ===== -->
+  <scroll-view class="list-section" scroll-y enhanced show-scrollbar="{{false}}" bindscrolltolower="onScrollBottom">
+
+    <!-- 加载中 -->
+    <view class="loading-wrap" wx:if="{{loading}}">
+      <view class="loading-dots">
+        <view class="dot dot1"></view>
+        <view class="dot dot2"></view>
+        <view class="dot dot3"></view>
+      </view>
+      <text class="loading-text">正在搜索附近的厕所...</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-wrap" wx:elif="{{filteredList.length === 0}}">
+      <view class="empty-icon-circle">
+        <text class="empty-emoji">🚻</text>
+      </view>
+      <text class="empty-title">附近暂无厕所</text>
+      <text class="empty-desc">试试切换筛选条件或移动到其他区域</text>
+    </view>
+
+    <!-- 卡片列表 -->
+    <view
+      class="toilet-card"
+      wx:for="{{filteredList}}"
+      wx:key="id"
+      bindtap="goDetail"
+      data-index="{{index}}"
+      hover-class="card-hover"
+    >
+      <!-- 卡片头部：序号 + 距离 -->
+      <view class="card-top">
+        <view class="card-rank">
+          <text class="rank-num">{{index + 1}}</text>
+        </view>
+        <view class="card-distance-badge">
+          <text class="dist-val">{{item.distanceText}}</text>
+          <text class="dist-dir">{{item.direction}}方向</text>
+        </view>
+      </view>
+
+      <!-- 卡片主体 -->
+      <view class="card-body">
+        <view class="card-info">
+          <text class="card-name">{{item.name}}</text>
+          <view class="card-meta">
+            <text class="meta-icon">📍</text>
+            <text class="meta-text">{{item.address}}</text>
+          </view>
+          <view class="card-meta" wx:if="{{item.openTime}}">
+            <text class="meta-icon">🕐</text>
+            <text class="meta-text">{{item.openTime}}</text>
+          </view>
+        </view>
+
+        <!-- 标签 -->
+        <view class="card-tags" wx:if="{{item.tags && item.tags.length}}">
+          <text
+            class="card-tag"
+            wx:for="{{item.tags}}"
+            wx:for-item="tag"
+            wx:key="*this"
+          >{{tag}}</text>
+        </view>
+      </view>
+
+      <!-- 卡片底部：设施 + 箭头 -->
+      <view class="card-bottom">
+        <view class="card-facilities">
+          <view class="facility {{item.hasAccessible ? 'on' : 'off'}}">
+            <text class="fac-icon">♿</text>
+            <text class="fac-label">无障碍</text>
+          </view>
+          <view class="facility {{item.hasPaper ? 'on' : 'off'}}">
+            <text class="fac-icon">🧻</text>
+            <text class="fac-label">纸巾</text>
+          </view>
+          <view class="facility {{item.hasSoap ? 'on' : 'off'}}">
+            <text class="fac-icon">🧴</text>
+            <text class="fac-label">洗手液</text>
+          </view>
+        </view>
+        <view class="card-arrow">
+          <text class="arrow-icon">›</text>
+        </view>
+      </view>
+
+      <!-- 评分条 -->
+      <view class="card-rating" wx:if="{{item.rating}}">
+        <view class="rating-bar-bg">
+          <view class="rating-bar-fill" style="width: {{item.rating * 20}}%"></view>
+        </view>
+        <text class="rating-num">{{item.rating}}</text>
+      </view>
+    </view>
+
+    <!-- 底部安全区 -->
+    <view style="height: 40rpx;"></view>
+  </scroll-view>
+
+  <!-- ===== 悬浮上报按钮 ===== -->
+  <view class="fab-upload" bindtap="goUpload">
+    <text class="fab-upload-icon">＋</text>
+    <text class="fab-upload-text">上报</text>
+  </view>
+
+  <!-- ===== 悬浮定位按钮 ===== -->
+  <view class="fab-relocate" bindtap="relocate">
+    <text class="fab-icon">📍</text>
+  </view>
+
+</view>
