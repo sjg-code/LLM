@@ -1,0 +1,100 @@
+<!--pages/sos/sos.wxml - 急友互助-->
+<view class="sos-page">
+
+  <!-- 顶部横幅 -->
+  <view class="sos-hero">
+    <view class="sos-hero-bg"></view>
+    <view class="sos-hero-content">
+      <view class="sos-title-row">
+        <text class="sos-emoji">🆘</text>
+        <view class="sos-title-wrap">
+          <text class="sos-title">江湖救急</text>
+          <text class="sos-sub">30分钟内自动消失 · 帮助急友获积分</text>
+        </view>
+      </view>
+      <view class="sos-stats-row">
+        <view class="sos-stat">
+          <text class="sos-stat-num">{{activeCount}}</text>
+          <text class="sos-stat-label">活跃求助</text>
+        </view>
+        <view class="sos-stat">
+          <text class="sos-stat-num">{{resolvedCount}}</text>
+          <text class="sos-stat-label">已解决</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 发布求助 -->
+  <view class="sos-post-card">
+    <textarea
+      class="sos-input"
+      placeholder="急！描述你的情况..."
+      value="{{postContent}}"
+      bindinput="onInput"
+      maxlength="100"
+      auto-height
+    />
+    <view class="sos-post-footer">
+      <text class="sos-char-count">{{postContent.length}}/100</text>
+      <button class="sos-post-btn {{canPost ? '' : 'disabled'}}" bindtap="submitPost">
+        <text>发布求助</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 求助列表 -->
+  <view class="sos-section-title">
+    <text class="section-icon">📡</text>
+    <text>附近求助</text>
+  </view>
+
+  <view class="sos-list">
+    <view class="empty-sos" wx:if="{{posts.length === 0}}">
+      <text class="empty-sos-emoji">🎉</text>
+      <text class="empty-sos-text">附近暂无求助，大家都找到厕所了！</text>
+    </view>
+
+    <view class="sos-card" wx:for="{{posts}}" wx:key="id">
+      <view class="sos-card-header">
+        <view class="sos-user">
+          <view class="sos-avatar">
+            <text>🧑</text>
+          </view>
+          <text class="sos-name">{{item.userName}}</text>
+        </view>
+        <view class="sos-time-wrap">
+          <text class="sos-time">{{item.timeText}}</text>
+          <text class="sos-expire" wx:if="{{item.expireText}}">剩{{item.expireText}}</text>
+        </view>
+      </view>
+
+      <text class="sos-content">{{item.content}}</text>
+
+      <view class="sos-card-footer">
+        <view class="sos-location">
+          <text class="sos-loc-icon">📍</text>
+          <text class="sos-loc-text">{{item.distanceText}}</text>
+        </view>
+        <view class="sos-actions">
+          <view class="sos-reply-btn" bindtap="replySos" data-id="{{item.id}}">
+            <text>💡 推荐厕所</text>
+          </view>
+          <view class="sos-resolved-btn {{item.resolved ? 'done' : ''}}" bindtap="resolveSos" data-id="{{item.id}}">
+            <text>{{item.resolved ? '✅ 已解决' : '标为已解决'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 回复列表 -->
+      <view class="sos-replies" wx:if="{{item.replies && item.replies.length}}">
+        <view class="reply-item" wx:for="{{item.replies}}" wx:for-item="reply" wx:key="index">
+          <text class="reply-name">{{reply.userName}}：</text>
+          <text class="reply-text">{{reply.content}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view style="height: 40rpx;"></view>
+</view>

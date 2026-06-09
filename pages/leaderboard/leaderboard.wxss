@@ -1,0 +1,44 @@
+/* pages/leaderboard/leaderboard.wxss */
+.lb-page { min-height: 100vh; background: #F5F6F8; padding-bottom: env(safe-area-inset-bottom); }
+
+/* 我的积分卡 */
+.my-card { position: relative; margin: 24rpx; border-radius: 24rpx; overflow: hidden; }
+.my-card-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #07C160, #05A34E); }
+.my-card-content { position: relative; z-index: 1; padding: 32rpx; }
+.my-info-row { display: flex; align-items: center; }
+.my-avatar-wrap { width: 80rpx; height: 80rpx; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20rpx; }
+.my-avatar-emoji { font-size: 40rpx; }
+.my-info { flex: 1; }
+.my-name { display: block; font-size: 32rpx; font-weight: 700; color: #fff; }
+.my-rank { display: block; font-size: 24rpx; color: rgba(255,255,255,0.8); margin-top: 4rpx; }
+.my-points-box { text-align: center; }
+.my-points-num { display: block; font-size: 48rpx; font-weight: 700; color: #fff; }
+.my-points-label { display: block; font-size: 22rpx; color: rgba(255,255,255,0.8); }
+
+/* 区域标题 */
+.lb-section-title { padding: 24rpx 32rpx 12rpx; font-size: 30rpx; font-weight: 600; color: #333; }
+
+/* 排行列表 */
+.lb-list { background: #fff; margin: 0 24rpx; border-radius: 20rpx; overflow: hidden; }
+.lb-item { display: flex; align-items: center; padding: 24rpx 20rpx; border-bottom: 1rpx solid #F5F5F5; }
+.lb-item:last-child { border-bottom: none; }
+.lb-item.is-me { background: #E8F8EE; }
+.lb-rank { width: 56rpx; text-align: center; font-size: 32rpx; flex-shrink: 0; }
+.lb-rank-num { font-size: 28rpx; color: #999; font-weight: 600; }
+.lb-avatar-box { width: 56rpx; height: 56rpx; border-radius: 50%; background: #F5F6F8; display: flex; align-items: center; justify-content: center; margin: 0 16rpx; flex-shrink: 0; }
+.lb-avatar-emoji { font-size: 28rpx; }
+.lb-info { flex: 1; min-width: 0; }
+.lb-name { display: block; font-size: 26rpx; color: #333; font-weight: 500; margin-bottom: 8rpx; }
+.lb-bar-wrap { height: 12rpx; background: #F0F0F0; border-radius: 6rpx; overflow: hidden; }
+.lb-bar { height: 100%; background: linear-gradient(90deg, #07C160, #06AD56); border-radius: 6rpx; transition: width 0.5s; }
+.lb-item.is-me .lb-bar { background: linear-gradient(90deg, #FFB800, #FF8C00); }
+.lb-pts { font-size: 26rpx; color: #07C160; font-weight: 700; flex-shrink: 0; margin-left: 16rpx; }
+
+/* 成就网格 */
+.achieve-grid { display: flex; flex-wrap: wrap; padding: 0 24rpx; gap: 16rpx; }
+.achieve-item { width: calc(50% - 8rpx); background: #fff; border-radius: 16rpx; padding: 24rpx; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04); }
+.achieve-item.locked { opacity: 0.5; }
+.achieve-icon { font-size: 48rpx; margin-bottom: 8rpx; }
+.achieve-name { font-size: 26rpx; color: #333; font-weight: 600; }
+.achieve-desc { font-size: 22rpx; color: #999; margin-top: 4rpx; }
+.achieve-status { font-size: 20rpx; color: #07C160; background: #E8F8EE; padding: 4rpx 16rpx; border-radius: 12rpx; margin-top: 8rpx; }

@@ -1,0 +1,62 @@
+<!--pages/leaderboard/leaderboard.wxml - 好友排行榜-->
+<view class="lb-page">
+
+  <!-- 我的积分卡片 -->
+  <view class="my-card">
+    <view class="my-card-bg"></view>
+    <view class="my-card-content">
+      <view class="my-info-row">
+        <view class="my-avatar-wrap"><text class="my-avatar-emoji">😎</text></view>
+        <view class="my-info">
+          <text class="my-name">我</text>
+          <text class="my-rank">排名 第{{myRank}}名</text>
+        </view>
+        <view class="my-points-box">
+          <text class="my-points-num">{{myPoints}}</text>
+          <text class="my-points-label">积分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 排行列表 -->
+  <view class="lb-section-title">
+    <text>🏆 积分排行榜</text>
+  </view>
+
+  <view class="lb-list">
+    <view class="lb-item {{item.isMe ? 'is-me' : ''}}" wx:for="{{board}}" wx:key="index">
+      <view class="lb-rank">
+        <text wx:if="{{index === 0}}">🥇</text>
+        <text wx:elif="{{index === 1}}">🥈</text>
+        <text wx:elif="{{index === 2}}">🥉</text>
+        <text wx:else class="lb-rank-num">{{index + 1}}</text>
+      </view>
+      <view class="lb-avatar-box">
+        <text class="lb-avatar-emoji">{{item.avatar}}</text>
+      </view>
+      <view class="lb-info">
+        <text class="lb-name">{{item.name}}{{item.isMe ? '（我）' : ''}}</text>
+        <view class="lb-bar-wrap">
+          <view class="lb-bar" style="width: {{item.barWidth}}%"></view>
+        </view>
+      </view>
+      <text class="lb-pts">{{item.points}}分</text>
+    </view>
+  </view>
+
+  <!-- 成就入口 -->
+  <view class="lb-section-title" style="margin-top: 32rpx;">
+    <text>🎖 我的成就</text>
+  </view>
+  <view class="achieve-grid">
+    <view class="achieve-item {{item.unlocked ? 'unlocked' : 'locked'}}" wx:for="{{achievements}}" wx:key="id">
+      <text class="achieve-icon">{{item.icon}}</text>
+      <text class="achieve-name">{{item.name}}</text>
+      <text class="achieve-desc">{{item.desc}}</text>
+      <text class="achieve-status" wx:if="{{item.unlocked}}">已解锁</text>
+    </view>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>

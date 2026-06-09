@@ -1,0 +1,68 @@
+/* pages/mall/mall.wxss */
+.mall-page { min-height: 100vh; background: #F5F6F8; }
+
+/* 顶部横幅 */
+.mall-hero { position: relative; padding: 40rpx 32rpx 48rpx; }
+.mall-hero-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #07C160, #05A34E); border-radius: 0 0 32rpx 32rpx; }
+.mall-hero-content { position: relative; z-index: 1; text-align: center; }
+.points-display { margin-bottom: 12rpx; }
+.points-label { font-size: 26rpx; color: rgba(255,255,255,0.8); display: block; margin-bottom: 8rpx; }
+.points-num { font-size: 72rpx; font-weight: 700; color: #fff; }
+.points-hint text { font-size: 22rpx; color: rgba(255,255,255,0.7); }
+
+/* Tab */
+.mall-tabs { display: flex; background: #fff; padding: 0 32rpx; margin-top: 16rpx; border-radius: 16rpx 16rpx 0 0; }
+.mall-tab { flex: 1; text-align: center; padding: 24rpx 0; font-size: 28rpx; color: #666; position: relative; }
+.mall-tab.active { color: #07C160; font-weight: 600; }
+.mall-tab-line { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 48rpx; height: 6rpx; border-radius: 3rpx; background: #07C160; }
+
+/* 分类筛选 */
+.category-scroll { white-space: nowrap; background: #fff; padding: 16rpx 0; }
+.category-list { display: flex; padding: 0 24rpx; gap: 16rpx; }
+.cat-tag { padding: 10rpx 28rpx; border-radius: 28rpx; background: #F5F6F8; font-size: 24rpx; color: #666; flex-shrink: 0; }
+.cat-tag.active { background: #E8F8EE; color: #07C160; font-weight: 600; }
+
+/* 商品网格 */
+.items-grid { display: flex; flex-wrap: wrap; padding: 24rpx; gap: 16rpx; }
+.item-card { width: calc(50% - 8rpx); background: #fff; border-radius: 20rpx; padding: 24rpx; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
+.item-card:active { transform: scale(0.98); }
+.item-icon-wrap { width: 100rpx; height: 100rpx; border-radius: 50%; background: #E8F8EE; display: flex; align-items: center; justify-content: center; margin-bottom: 16rpx; }
+.item-icon { font-size: 48rpx; }
+.item-name { font-size: 28rpx; font-weight: 600; color: #333; margin-bottom: 6rpx; text-align: center; }
+.item-desc { font-size: 22rpx; color: #999; margin-bottom: 16rpx; text-align: center; }
+.item-bottom { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.item-price { display: flex; align-items: baseline; gap: 4rpx; }
+.price-num { font-size: 32rpx; font-weight: 700; color: #07C160; }
+.price-unit { font-size: 20rpx; color: #07C160; }
+.item-stock { font-size: 20rpx; color: #CCC; }
+
+/* 空状态 */
+.empty-mall { display: flex; flex-direction: column; align-items: center; padding: 80rpx 0; }
+.empty-mall-emoji { font-size: 80rpx; margin-bottom: 16rpx; }
+.empty-mall-text { font-size: 28rpx; color: #999; }
+.empty-mall-sub { font-size: 24rpx; color: #CCC; margin-top: 8rpx; }
+
+/* 兑换记录 */
+.history-list { padding: 24rpx; }
+.history-item { display: flex; align-items: center; background: #fff; border-radius: 16rpx; padding: 24rpx; margin-bottom: 12rpx; box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03); }
+.history-icon-wrap { width: 72rpx; height: 72rpx; border-radius: 50%; background: #F5F6F8; display: flex; align-items: center; justify-content: center; margin-right: 20rpx; flex-shrink: 0; }
+.history-icon { font-size: 32rpx; }
+.history-info { flex: 1; }
+.history-name { display: block; font-size: 28rpx; color: #333; font-weight: 500; margin-bottom: 4rpx; }
+.history-time { display: block; font-size: 22rpx; color: #CCC; }
+.history-price { font-size: 26rpx; color: #FF6B00; font-weight: 600; flex-shrink: 0; }
+
+/* 兑换确认弹窗 */
+.confirm-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+.confirm-dialog { width: 600rpx; background: #fff; border-radius: 24rpx; overflow: hidden; }
+.confirm-header { padding: 32rpx; text-align: center; border-bottom: 1rpx solid #F0F0F0; }
+.confirm-title { font-size: 32rpx; font-weight: 600; color: #333; }
+.confirm-body { padding: 40rpx 32rpx; display: flex; flex-direction: column; align-items: center; }
+.confirm-item-icon { width: 120rpx; height: 120rpx; border-radius: 50%; background: #E8F8EE; display: flex; align-items: center; justify-content: center; font-size: 56rpx; margin-bottom: 20rpx; }
+.confirm-item-name { font-size: 30rpx; font-weight: 600; color: #333; margin-bottom: 12rpx; }
+.confirm-item-price { font-size: 28rpx; color: #07C160; font-weight: 600; margin-bottom: 8rpx; }
+.confirm-balance { font-size: 24rpx; color: #999; }
+.confirm-footer { display: flex; border-top: 1rpx solid #F0F0F0; }
+.confirm-cancel { flex: 1; padding: 28rpx; text-align: center; font-size: 28rpx; color: #666; }
+.confirm-ok { flex: 1; padding: 28rpx; text-align: center; font-size: 28rpx; color: #07C160; font-weight: 600; border-left: 1rpx solid #F0F0F0; }
+.confirm-ok.disabled { color: #CCC; }

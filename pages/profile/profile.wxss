@@ -171,6 +171,7 @@
 
 .quick-grid {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
 }
 
@@ -178,7 +179,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 140rpx;
+  width: 33%;
+  margin-bottom: 24rpx;
 }
 
 .quick-icon-wrap {

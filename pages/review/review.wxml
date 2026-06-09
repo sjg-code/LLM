@@ -1,0 +1,120 @@
+<!--pages/review/review.wxml - 点评排行榜-->
+<view class="review-page">
+
+  <!-- 顶部统计横幅 -->
+  <view class="hero-banner">
+    <view class="banner-bg"></view>
+    <view class="banner-content">
+      <text class="banner-title">厕所点评榜</text>
+      <text class="banner-desc">真实评价，帮助每一个人</text>
+      <view class="banner-stats">
+        <view class="b-stat">
+          <text class="b-num">{{totalReviews}}</text>
+          <text class="b-label">总点评</text>
+        </view>
+        <view class="b-divider"></view>
+        <view class="b-stat">
+          <text class="b-num">{{totalToilets}}</text>
+          <text class="b-label">已点评厕所</text>
+        </view>
+        <view class="b-divider"></view>
+        <view class="b-stat">
+          <text class="b-num">{{avgRating}}</text>
+          <text class="b-label">平均分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'rank' ? 'active' : ''}}" bindtap="switchTab" data-tab="rank">
+      <text>排行榜</text>
+      <view class="tab-line" wx:if="{{activeTab === 'rank'}}"></view>
+    </view>
+    <view class="tab-item {{activeTab === 'latest' ? 'active' : ''}}" bindtap="switchTab" data-tab="latest">
+      <text>最新点评</text>
+      <view class="tab-line" wx:if="{{activeTab === 'latest'}}"></view>
+    </view>
+    <view class="tab-item {{activeTab === 'mine' ? 'active' : ''}}" bindtap="switchTab" data-tab="mine">
+      <text>我的点评</text>
+      <view class="tab-line" wx:if="{{activeTab === 'mine'}}"></view>
+    </view>
+  </view>
+
+  <!-- 排行榜列表 -->
+  <view class="list-wrap" wx:if="{{activeTab === 'rank'}}">
+    <view class="empty-hint" wx:if="{{rankList.length === 0}}">
+      <text class="empty-emoji-big">🏆</text>
+      <text>还没有人点评，快来当第一个吧！</text>
+    </view>
+    <view class="rank-card" wx:for="{{rankList}}" wx:key="toiletId" bindtap="goRankDetail" data-id="{{item.toiletId}}">
+      <view class="rank-medal">
+        <text wx:if="{{index === 0}}">🥇</text>
+        <text wx:elif="{{index === 1}}">🥈</text>
+        <text wx:elif="{{index === 2}}">🥉</text>
+        <text wx:else class="rank-num">{{index + 1}}</text>
+      </view>
+      <view class="rank-info">
+        <text class="rank-name">{{item.toiletName || ('厕所 #' + item.toiletId)}}</text>
+        <view class="rank-meta">
+          <text class="rank-stars">{{item.starsText}}</text>
+          <text class="rank-avg">{{item.avgRating}}分</text>
+          <text class="rank-count">{{item.count}}条点评</text>
+        </view>
+      </view>
+      <view class="rank-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 最新点评 -->
+  <view class="list-wrap" wx:if="{{activeTab === 'latest'}}">
+    <view class="empty-hint" wx:if="{{latestReviews.length === 0}}">
+      <text class="empty-emoji-big">💬</text>
+      <text>还没有人发布点评</text>
+    </view>
+    <view class="review-card" wx:for="{{latestReviews}}" wx:key="id">
+      <view class="rv-header">
+        <view class="rv-user">
+          <view class="rv-avatar-wrap">
+            <text class="rv-avatar">{{item.avatar || '🧑'}}</text>
+          </view>
+          <text class="rv-name">{{item.userName}}</text>
+        </view>
+        <view class="rv-rating">
+          <text class="rv-stars">{{item.starsText}}</text>
+        </view>
+      </view>
+      <text class="rv-content">{{item.content}}</text>
+      <view class="rv-footer">
+        <text class="rv-time">{{item.timeText}}</text>
+        <view class="rv-toilet-tag" bindtap="goRankDetail" data-id="{{item.toiletId}}">
+          <text>📍 {{item.toiletName || '厕所 #' + item.toiletId}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的点评 -->
+  <view class="list-wrap" wx:if="{{activeTab === 'mine'}}">
+    <view class="empty-hint" wx:if="{{myReviews.length === 0}}">
+      <text class="empty-emoji-big">📝</text>
+      <text>你还没有发布过点评</text>
+      <text class="empty-sub">去厕所详情页写一条点评吧</text>
+    </view>
+    <view class="review-card" wx:for="{{myReviews}}" wx:key="id">
+      <view class="rv-header">
+        <text class="rv-toilet-name">{{item.toiletName || '厕所 #' + item.toiletId}}</text>
+        <view class="rv-rating">
+          <text class="rv-stars">{{item.starsText}}</text>
+        </view>
+      </view>
+      <text class="rv-content">{{item.content}}</text>
+      <view class="rv-footer">
+        <text class="rv-time">{{item.timeText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view style="height: 40rpx;"></view>
+</view>

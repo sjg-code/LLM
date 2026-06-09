@@ -36,8 +36,8 @@
     <!-- 评分 -->
     <view class="rating-section" wx:if="{{toilet.rating}}">
       <view class="rating-stars">
-        <view class="star" wx:for="{{5}}" wx:key="*this">
-          <text class="star-icon {{index < Math.floor(toilet.rating) ? 'filled' : ''}}">★</text>
+        <view class="star" wx:for="{{starArray}}" wx:key="index">
+          <text class="star-icon {{item ? 'filled' : ''}}">★</text>
         </view>
       </view>
       <text class="rating-score">{{toilet.rating}} 分</text>

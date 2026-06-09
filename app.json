@@ -1,9 +1,14 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/review/review",
+    "pages/sos/sos",
+    "pages/community/community",
     "pages/profile/profile",
     "pages/detail/detail",
-    "pages/upload/upload"
+    "pages/upload/upload",
+    "pages/leaderboard/leaderboard",
+    "pages/mall/mall"
   ],
   "window": {
     "navigationBarBackgroundColor": "#07C160",
@@ -16,13 +21,31 @@
     "color": "#999999",
     "selectedColor": "#07C160",
     "backgroundColor": "#ffffff",
-    "borderStyle": "white",
+    "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/index/index",
         "text": "找厕所",
         "iconPath": "images/tab-home.png",
         "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/review/review",
+        "text": "点评",
+        "iconPath": "images/tab-review.png",
+        "selectedIconPath": "images/tab-review-active.png"
+      },
+      {
+        "pagePath": "pages/sos/sos",
+        "text": "急友",
+        "iconPath": "images/tab-sos.png",
+        "selectedIconPath": "images/tab-sos-active.png"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "text": "社区",
+        "iconPath": "images/tab-community.png",
+        "selectedIconPath": "images/tab-community-active.png"
       },
       {
         "pagePath": "pages/profile/profile",

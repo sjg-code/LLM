@@ -1,7 +1,9 @@
 // pages/profile/profile.js
+const util = require('../../utils/util.js')
 Page({
   data: {
     userAvatar: '',
+    myPoints: 0,
     stats: {
       totalVisits: 28,
       totalNav: 15,
@@ -10,8 +12,10 @@ Page({
     quickMenus: [
       { key: 'history', label: '查找记录', icon: '📋', color: 'green' },
       { key: 'favorite', label: '收藏厕所', icon: '⭐', color: 'orange' },
-      { key: 'feedback', label: '意见反馈', icon: '💬', color: 'blue' },
-      { key: 'report', label: '上报厕所', icon: '📥', color: 'purple' }
+      { key: 'mall', label: '积分商城', icon: '🛒', color: 'purple' },
+      { key: 'leaderboard', label: '好友排行', icon: '🏆', color: 'blue' },
+      { key: 'report', label: '上报厕所', icon: '📥', color: 'green' },
+      { key: 'feedback', label: '意见反馈', icon: '💬', color: 'orange' }
     ],
     achievements: [
       {
@@ -49,6 +53,10 @@ Page({
     wx.showToast({ title: '编辑资料', icon: 'none' })
   },
 
+  onShow() {
+    this.setData({ myPoints: util.getPoints() })
+  },
+
   // 更换头像
   changeAvatar() {
     wx.chooseMedia({
@@ -69,6 +77,14 @@ Page({
       wx.navigateTo({ url: '/pages/upload/upload' })
       return
     }
+    if (key === 'mall') {
+      wx.navigateTo({ url: '/pages/mall/mall' })
+      return
+    }
+    if (key === 'leaderboard') {
+      wx.navigateTo({ url: '/pages/leaderboard/leaderboard' })
+      return
+    }
     const tips = {
       history: '查找记录功能开发中...',
       favorite: '收藏厕所功能开发中...',
@@ -78,7 +94,7 @@ Page({
   },
 
   viewAchievements() {
-    wx.showToast({ title: '成就系统开发中...', icon: 'none' })
+    wx.navigateTo({ url: '/pages/leaderboard/leaderboard' })
   },
 
   onSettingTap(e) {

@@ -2,13 +2,18 @@
 Page({
   data: {
     toilet: {},
-    markers: []
+    markers: [],
+    starArray: []
   },
 
   onLoad(options) {
     if (options.data) {
       try {
         const toilet = JSON.parse(decodeURIComponent(options.data))
+        // 预计算星星数组：前N个为true(实心)，其余为false(空心)
+        const ratingFloor = Math.floor(Number(toilet.rating) || 0)
+        const starArray = [0, 1, 2, 3, 4].map(i => i < ratingFloor)
+
         const markers = [
           {
             id: toilet.id,
@@ -31,7 +36,7 @@ Page({
           }
         ]
 
-        this.setData({ toilet, markers })
+        this.setData({ toilet, markers, starArray })
       } catch (e) {
         console.error('解析厕所数据失败:', e)
         wx.showToast({ title: '数据加载失败', icon: 'none' })
