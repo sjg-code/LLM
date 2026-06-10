@@ -3,6 +3,9 @@ const util = require('../../utils/util.js')
 Page({
   data: {
     userAvatar: '',
+    userName: '微信用户',
+    showSheet: false, // 控制授权面板显示
+    tempAvatarUrl: '', // 临时头像URL
     myPoints: 0,
     stats: {
       totalVisits: 28,
@@ -53,8 +56,112 @@ Page({
     wx.showToast({ title: '编辑资料', icon: 'none' })
   },
 
+  onLoad() {
+    // 页面加载时尝试从缓存获取用户信息
+    this.loadUserInfoFromCache()
+  },
+
   onShow() {
     this.setData({ myPoints: util.getPoints() })
+    // 如果没有头像，自动弹出授权面板
+    if (!this.data.userAvatar) {
+      // 使用 setTimeout 确保页面渲染完成后再弹出
+      setTimeout(() => {
+        this.showAuthSheet()
+      }, 300)
+    }
+  },
+
+  // 从缓存加载用户信息
+  loadUserInfoFromCache() {
+    try {
+      const userInfo = wx.getStorageSync('userInfo')
+      if (userInfo) {
+        this.setData({
+          userAvatar: userInfo.avatarUrl,
+          userName: userInfo.nickName || '微信用户'
+        })
+      }
+    } catch (e) {
+      // 忽略错误
+    }
+  },
+
+  // 显示授权面板
+  showAuthSheet() {
+    this.setData({ showSheet: true })
+  },
+
+  // 隐藏授权面板
+  hideAuthSheet() {
+    this.setData({ showSheet: false })
+  },
+
+  // 防止触摸移动（阻止背景滚动）
+  preventTouchMove() {
+    return false
+  },
+
+  // 获取微信用户信息（新版：使用组件回调）
+  onChooseAvatar(e) {
+    const { avatarUrl } = e.detail
+    const { userName } = this.data
+    
+    this.setData({
+      userAvatar: avatarUrl,
+      tempAvatarUrl: avatarUrl
+    })
+    
+    // 保存到本地存储
+    try {
+      const userInfo = {
+        avatarUrl: avatarUrl,
+        nickName: userName
+      }
+      wx.setStorageSync('userInfo', userInfo)
+      wx.showToast({ title: '头像设置成功', icon: 'success' })
+    } catch (e) {
+      // 忽略错误
+    }
+  },
+
+  // 昵称输入框变化
+  onNicknameInput(e) {
+    const nickName = e.detail.value
+    this.setData({ userName: nickName })
+  },
+
+  // 提交用户信息
+  onSubmitUserInfo() {
+    const { userAvatar, userName } = this.data
+    
+    if (!userAvatar) {
+      wx.showToast({ title: '请先选择头像', icon: 'none' })
+      return
+    }
+
+    // 保存用户信息
+    try {
+      const userInfo = {
+        avatarUrl: userAvatar,
+        nickName: userName || '微信用户'
+      }
+      wx.setStorageSync('userInfo', userInfo)
+      this.hideAuthSheet()
+      wx.showToast({ title: '设置成功', icon: 'success' })
+    } catch (e) {
+      wx.showToast({ title: '保存失败', icon: 'none' })
+    }
+  },
+
+  // 使用默认头像
+  useDefaultAvatar() {
+    this.hideAuthSheet()
+    wx.showToast({ 
+      title: '已使用默认头像', 
+      icon: 'success',
+      duration: 1500
+    })
   },
 
   // 更换头像
